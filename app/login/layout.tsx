@@ -1,10 +1,9 @@
-import Navbar from '@/components/Navbar'
-import './globals.css'
+import '../globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Home',
-  description: 'Home page',
+  title: 'Login',
+  description: 'Login page',
 }
 
 export default function RootLayout({
@@ -13,15 +12,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body >
+
         <main>
-          <header>
-            <Navbar/>
-          </header>
         {children}
         </main>
-      </body>
-    </html>
+
   )
 }
