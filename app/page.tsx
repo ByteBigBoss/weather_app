@@ -52,32 +52,31 @@ export default function Home() {
 
   }
 
-  const array:any = [];
+  // const array:any = [];
 
   const requestImage = async () => {
 
-    await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${foundCity}&client_id=xHc6OTcGK5m3uduRCDRzPwPi0KLE-Bv3CRqJNp-x1qA`).then((res) => {
+    await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${city}&client_id=xHc6OTcGK5m3uduRCDRzPwPi0KLE-Bv3CRqJNp-x1qA`).then((res) => {
 
-      setImages(res.data);
-      console.log(res.data);
+      
 
       const resArray = res.data.results;
 
       
 
-      for (let img of resArray) {
+      // for (let img of resArray) {
         
-        let obj = {
-          "key":img.id,
-          "url":img.urls.full
-        }
+      //   let obj = {
+      //     "key":img.id,
+      //     "url":img.urls.full
+      //   }
 
-        array.push(obj);
+      //   array.push(obj);
 
         
-      }
+      // }
 
-      console.log(array);
+     setImages(resArray)
 
 
     }).catch(() => {
@@ -157,22 +156,15 @@ export default function Home() {
         <div className='w-full 2xl:w-auto  h-auto flex gap-[20px] overflow-x-scroll mt-[120px] justify-start'>
 
 
-          {/* {array &&array.map((data, index) => (
+          {images && images.map((data:any, index:number) => (
 
-            <div key={index} className='w-[280px] h-[280px] bg-slate-100 rounded-[8px] border-[1px] border-slate-200 flex-shrink-0'>
-              <img src={data.url} alt='icon' className='w-[280px] h-[280px]' />
+            <div key={data.id} className='w-[280px] h-[280px] bg-slate-100 rounded-[8px] border-[1px] border-slate-200 flex-shrink-0'>
+              <img src={data.urls.full} alt='icon' className='w-[280px] h-[280px]' />
             </div>
 
-          ))} */}
-
-
-          {array.map((data:any, index:number)=>(
-                <div key={data.key} className='text-black'>{data.url}</div>
           ))}
 
 
-         
-            <div>{array}</div>
 
 
 
