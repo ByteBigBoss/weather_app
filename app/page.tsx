@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image';
 import axios from 'axios';
-import { use, useDeferredValue, useEffect, useState } from 'react';
+import { use, useDeferredValue, useEffect, useMemo, useState } from 'react';
 
 
 export default function Home() {
@@ -18,6 +18,8 @@ export default function Home() {
   const [humidity, setHumidity] = useState(0);
   const [seaLevel, setSeaLevel] = useState(0);
   const [icon, setIcon] = useState('');
+  const [background, setBackground] = useState('');
+  const [status, setStatus] = useState('');
 
 
   const [arrayObj, setArrayObj] = useState([]);
@@ -42,9 +44,9 @@ export default function Home() {
         setHumidity(data.main.humidity);
         setSeaLevel(data.main.sea_level);
         setIcon(weather.icon);
+        setStatus(weather?.main);
 
         requestImage();
-
       })
       .catch((err) => {
         console.log(err);
@@ -86,14 +88,32 @@ export default function Home() {
   }
 
 
+  const requestBackgroundImage =async () => {
+    
+    await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${status}&client_id=xHc6OTcGK5m3uduRCDRzPwPi0KLE-Bv3CRqJNp-x1qA`)
+    .then((res) => {
+  
+      setBackground(res.data.results?.[0].urls.full);
+
+    }).catch(()=>{
+
+    });
+  
+
+  }
+
+  useMemo(()=>{ requestBackgroundImage();},[request, status])
+
 
   return (
-    <section className='w-full min-h-screen  flex flex-col justify-center items-center box-border p-[50px] '>
+    <section className='w-full min-h-screen  flex flex-col justify-center items-center box-border p-[50px] relative'>
+
+        <img src={background} className='w-full h-full absolute -z-50 blur-[3px] opacity-80'/>
 
 
       {/* City */}
       <div className=' flex flex-col items-center'>
-        <div className='w-full flex items-center gap-[40px]'>
+        <div className='w-full flex flex-col lg:flex-row items-center gap-[40px] '>
           <img src={icon === '' ? '/cloudy.png' : `http://openweathermap.org/img/wn/${icon}@2x.png`} alt='icon' className='w-[192px] h-[192px]' />
           <div className='text-[64px] font-bold md:text-[128px]'>{foundCity}</div>
         </div>
@@ -153,7 +173,7 @@ export default function Home() {
 
       {/* image gallery */}
       <div className='w-full flex flex-col items-center'>
-        <div className='w-full 2xl:w-auto  h-auto flex gap-[20px] overflow-x-scroll mt-[120px] justify-start'>
+        <div className='w-full 2xl:w-auto overflow-hidden   h-auto flex gap-[20px] overflow-x-scroll mt-[120px] justify-start'>
 
 
           {images && images.map((data:any, index:number) => (
