@@ -42,6 +42,8 @@ const Navbar = () => {
       setPage('home');
     }else if(path==='/login'){
       setPage('login');
+    }else if(path==='/register'){
+      setPage('register');
     }
 
   },[path, params]);
@@ -49,7 +51,7 @@ const Navbar = () => {
   // ----------------------------------------------------------------------
   
   return (
-    <div className={`${'w-full h-auto bg-slate-800 box-border px-[40px] py-[30px] flex justify-between items-center'} ${page==='login'?'hidden':'visible'}`}>
+    <div className={`${'w-full h-auto bg-slate-800 box-border px-[40px] py-[30px] flex justify-between items-center'} ${page==='login'?'hidden':page==='register'?'hidden':'visible'}`}>
           <button className='w-[100px] h-[40px] bg-blue-500 rounded-[12px] text-white font-bold' onClick={NavigateToLoginPage}>Log out</button>
           <button className='px-[30px]  py-[20px] bg-blue-500 rounded-[12px] text-white font-bold' onClick={toggleTheme}>Change Theme</button>
     </div>
