@@ -1,6 +1,9 @@
 import React from 'react'
+import axios from 'axios'
 
 const Register = () => {
+
+  
 
   return (
   <div className='w-full min-h-screen flex justify-center items-center'>
