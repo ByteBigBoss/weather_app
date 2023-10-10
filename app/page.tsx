@@ -18,6 +18,7 @@ export default function Home() {
   const [humidity, setHumidity] = useState(0);
   const [seaLevel, setSeaLevel] = useState(0);
   const [icon, setIcon] = useState('');
+  const [img1, setImg1] = useState();
 
 
   const [arrayObj, setArrayObj] = useState([]);
@@ -52,29 +53,37 @@ export default function Home() {
 
   }
 
-  const array:any = [];
+  const array: any = [];
 
   const requestImage = async () => {
 
     await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${foundCity}&client_id=xHc6OTcGK5m3uduRCDRzPwPi0KLE-Bv3CRqJNp-x1qA`).then((res) => {
 
-      setImages(res.data);
-      console.log(res.data);
+
+      // setImages(res.data);
+      // console.log(res.data);
+
+      // const resArray = res.data.results.urls.full;
+
+      // setImages(resArray);
+
 
       const resArray = res.data.results;
 
-      
 
       for (let img of resArray) {
-        
+
         let obj = {
-          "key":img.id,
-          "url":img.urls.full
+          "key": img.id,
+          "url": img.urls.full
         }
 
         array.push(obj);
 
-        
+        setImg1(img.urls.full);
+
+        setImages(array);
+
       }
 
       console.log(array);
@@ -157,23 +166,23 @@ export default function Home() {
         <div className='w-full 2xl:w-auto  h-auto flex gap-[20px] overflow-x-scroll mt-[120px] justify-start'>
 
 
-          {/* {array &&array.map((data, index) => (
+          {images.map((data: any, index) => (
 
             <div key={index} className='w-[280px] h-[280px] bg-slate-100 rounded-[8px] border-[1px] border-slate-200 flex-shrink-0'>
               <img src={data.url} alt='icon' className='w-[280px] h-[280px]' />
             </div>
 
-          ))} */}
-
-
-          {array.map((data:any, index:number)=>(
-                <div key={data.key} className='text-black'>{data.url}</div>
           ))}
 
 
-         
-            <div>{array}</div>
+          {/* {array.map((data:any, index:number)=>(
+                <div key={data.key} className='text-black'>{data.url}</div>
+          ))} */}
 
+
+          {/* <div className='w-[280px] h-[280px] bg-slate-100 rounded-[8px] border-[1px] border-slate-200 flex-shrink-0'>
+              <img src={img1} alt='icon' className='w-[280px] h-[280px]' />
+            </div> */}
 
 
         </div>
