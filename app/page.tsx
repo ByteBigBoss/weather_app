@@ -57,7 +57,7 @@ export default function Home() {
 
   const requestImage = async () => {
 
-    await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${foundCity}&client_id=xHc6OTcGK5m3uduRCDRzPwPi0KLE-Bv3CRqJNp-x1qA`).then((res) => {
+    await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${city}&client_id=xHc6OTcGK5m3uduRCDRzPwPi0KLE-Bv3CRqJNp-x1qA`).then((res) => {
 
 
       // setImages(res.data);
